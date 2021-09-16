@@ -1,17 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
+import App from './App'
+import { BrowserRouter as Router, withRouter } from 'react-router-dom'
+import 'semantic-ui-css/semantic.min.css'
+import db from './utils/firebase'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import reducer from './reducers/index'
+import thunk from 'redux-thunk'
+import allActions from './actions/allActions'
+import { useDispatch } from 'react-redux'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const store = createStore(reducer, applyMiddleware(thunk))
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const Root = (props) => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {  
+        db.auth.onAuthStateChanged(user => {
+            if(user && user.emailVerified){
+                const { uid, displayName, photoURL } = user;
+                dispatch(allActions.userAcs.setUser({ uid, displayName, photoURL}))
+                dispatch(allActions.channelAcs.loadChannel(uid))
+                props.history.push('/')
+            }
+            else{
+                props.history.push('/login')
+            }
+        })    
+    },[])
+
+    return <App/>
+}
+
+const RootWithAuth = withRouter(Root)
+
+ReactDOM.render(<Provider store={store}><Router><RootWithAuth/></Router></Provider>, document.getElementById('root'));

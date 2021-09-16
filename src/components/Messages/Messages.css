@@ -1,0 +1,54 @@
+.upload-div {
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+  margin: auto;
+}
+
+.upload a{
+    width: 100px;
+    height: 100px;
+}
+
+.link {
+    color: #191b1b;
+}
+
+.link-upload{
+    display: flex;
+    justify-content: space-around;
+}
+
+.link-upload a{
+    display: block;
+}
+
+.avatar{
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.info{
+    margin-bottom: 5px;
+}
+
+.mss{
+    width: auto;
+    padding: 5px;
+    background: #80808075;
+    border-radius: 5px;
+    color: #222121;
+    display: inline-block;
+}
+
+.image-link{
+    padding: 10px;
+    background: #80808075;
+    border-radius: 5px;
+    color: #222121;
+    margin-top: 5px !important;
+    display: inline-block;
+}
+

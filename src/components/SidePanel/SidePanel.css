@@ -1,0 +1,9 @@
+
+.on {
+    opacity: 1;
+    color: white !important;
+}
+
+.off{
+    opacity: 0.6;
+}
